@@ -1,0 +1,35 @@
+
+name: Build
+
+on:
+  push:
+    branches:
+    - '*'
+
+jobs:
+  build:
+
+    name: Build on JDK${{ matrix.jdk }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        jdk: [ 8, 11, 17 ]
+
+    steps:
+
+    - name: Checkout git branch
+      uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-package: jdk
+        java-version: ${{ matrix.jdk }}
+
+    - name: Build
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: build --info --scan
