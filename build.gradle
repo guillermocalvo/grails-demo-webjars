@@ -127,6 +127,10 @@ tasks.withType(Test) {
 assets {
     minifyJs = true
     minifyCss = true
+    excludes = [
+            'webjars/popper.js/1.16.1-lts/*.*',
+            'webjars/popper.js/1.16.1-lts/esm/*.*',
+    ]
 }
 
 if (hasProperty('buildScan')) {
